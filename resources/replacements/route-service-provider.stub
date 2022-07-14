@@ -1,0 +1,32 @@
+<?php
+
+namespace {{ rootNamespace }}Providers;
+
+use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use OllieCodes\Toolkit\Routing\Concerns\MapsRouteRegistrars;
+use {{ rootNamespace }}Http\Routes\DefaultRoutes;
+
+class RouteServiceProvider extends ServiceProvider
+{
+    use MapsRouteRegistrars;
+
+    /**
+     * @var class-string<\OllieCodes\Toolkit\Routing\Contracts\RouteRegistrar>[]
+     */
+    protected array $registrars = [
+        DefaultRoutes::class
+    ];
+
+    /**
+     * Define your route model bindings, pattern filters, and other route configuration.
+     *
+     * @return void
+     */
+    public function boot(): void
+    {
+        $this->routes(function (Registrar $router) {
+            $this->mapRoutes($router, $this->registrars);
+        });
+    }
+}
